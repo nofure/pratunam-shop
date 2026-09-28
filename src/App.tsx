@@ -6,6 +6,7 @@ import { SessionProvider, useSession } from './session'
 import { startAutoSync } from './sync'
 import { UIProvider } from './ui'
 import Layout from './Layout'
+import AppErrorBoundary from './AppErrorBoundary'
 import PosPage from './features/pos/PosPage'
 import BillsPage from './features/pos/BillsPage'
 import ShiftPage from './features/shift/ShiftPage'
@@ -33,15 +34,18 @@ function RequireAuth({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
 
-/** Owner-only pages. Staff see a short message instead. */
+/** Owner-only pages. Staff see a short message instead (the owner can switch in and come back here). */
 export function OwnerOnly({ children }: { children: ReactNode }) {
-  const { isOwner } = useSession()
+  const { isOwner, logout } = useSession()
   if (!isOwner)
     return (
       <div className="page">
         <div className="empty">
           <p className="empty-title">หน้านี้สำหรับเจ้าของร้าน</p>
           <p className="muted">เข้าสู่ระบบด้วย PIN ของเจ้าของเพื่อดูหน้านี้</p>
+          <button type="button" className="btn btn-primary" style={{ marginTop: 16 }} onClick={logout}>
+            <span className="btn-label">เข้าสู่ระบบเป็นเจ้าของ</span>
+          </button>
         </div>
       </div>
     )
@@ -51,6 +55,8 @@ export function OwnerOnly({ children }: { children: ReactNode }) {
 export default function App() {
   useEffect(() => startAutoSync(), [])
   return (
+    // Outermost guard: even the session (which reads the database) can't blank the app.
+    <AppErrorBoundary>
     <SessionProvider>
       <UIProvider>
       <HashRouter>
@@ -101,5 +107,6 @@ export default function App() {
       </HashRouter>
       </UIProvider>
     </SessionProvider>
+    </AppErrorBoundary>
   )
 }

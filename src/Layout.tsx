@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { BarChart3, CloudOff, Cloud, Lock, Menu, ReceiptText, ShoppingBag, Store, Wallet, RefreshCw, AlertTriangle } from 'lucide-react'
 import { useSession } from './session'
 import { useCurrentBooth } from './hooks'
 import { useSyncStatus, syncNow } from './sync'
 import BoothPicker from './BoothPicker'
+import AppErrorBoundary from './AppErrorBoundary'
 
 function SyncBadge() {
   const s = useSyncStatus()
@@ -30,7 +31,7 @@ function SyncBadge() {
             ? `รอส่ง ${s.pending}`
             : 'ซิงก์แล้ว'
   return (
-    <button className={`sync-badge sync-${s.state}`} onClick={() => void syncNow()} title="กดเพื่อซิงก์ตอนนี้">
+    <button className={`sync-badge sync-${s.state}`} onClick={() => void syncNow()} title={s.error ?? 'กดเพื่อซิงก์ตอนนี้'}>
       {icon}
       <span>{label}</span>
     </button>
@@ -42,8 +43,16 @@ export default function Layout() {
   const booth = useCurrentBooth()
   const [picking, setPicking] = useState(false)
   const { pathname } = useLocation()
-  // Selling pages need a booth; settings/reports/menu stay reachable without one.
-  const needsBooth = /^\/(pos|bills|shift)/.test(pathname)
+  // Selling pages need a booth; settings/reports/menu and the close history stay reachable without one.
+  const needsBooth = /^\/(pos|bills|shift)(\/|$)/.test(pathname) && !pathname.startsWith('/shift/history')
+
+  // Top-level section ('pos', 'stock', …): moving to another one also clears a crashed page.
+  const section = pathname.split('/')[1] ?? ''
+
+  // A new page starts at the top (the previous page's scroll position would hide its header).
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   const nav = [
     { to: '/pos', label: 'ขาย', icon: <ShoppingBag size={22} /> },
@@ -81,7 +90,15 @@ export default function Layout() {
           </NavLink>
         ))}
       </nav>
-      <main className="main">{picking || (booth === null && needsBooth) ? <BoothPicker onDone={() => setPicking(false)} /> : <Outlet />}</main>
+      <main className="main">
+        {picking || (booth === null && needsBooth) ? (
+          <BoothPicker onDone={() => setPicking(false)} />
+        ) : (
+          <AppErrorBoundary key={section}>
+            <Outlet />
+          </AppErrorBoundary>
+        )}
+      </main>
     </div>
   )
 }

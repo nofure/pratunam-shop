@@ -161,8 +161,8 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: var(--h-control);
+  height: var(--h-control);
   border-radius: 999px;
   border: 1px solid transparent;
   background: transparent;

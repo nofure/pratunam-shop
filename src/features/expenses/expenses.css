@@ -1,0 +1,258 @@
+/* Expenses page (owner). Classes prefixed .exp- */
+
+/* ---------- month navigator + booth filter ---------- */
+.exp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+.exp-month {
+  display: flex;
+  flex: 1 1 280px;
+  align-items: center;
+  gap: 8px;
+  max-width: 420px;
+  min-width: 0;
+}
+.exp-month-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exp-filter {
+  display: flex;
+  gap: 8px;
+  margin: 0 calc(-1 * var(--pad)) 16px;
+  padding: 2px var(--pad) 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.exp-filter::-webkit-scrollbar {
+  display: none;
+}
+.exp-filter .chip {
+  flex: none;
+}
+
+/* ---------- layout ---------- */
+.exp-layout {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+@media (min-width: 900px) {
+  .exp-layout {
+    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+    align-items: start;
+    gap: 24px;
+  }
+}
+
+/* ---------- summary card ---------- */
+.exp-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.exp-summary-label {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.exp-summary-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.exp-summary .divider {
+  margin: 14px 0;
+}
+
+.exp-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 6px 0 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.exp-note svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+.exp-section-count {
+  font-weight: 500;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- day groups ---------- */
+.exp-day-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.exp-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.exp-list > li:not(.list-row) {
+  border-bottom: 1px solid var(--border);
+}
+.exp-list > li:not(.list-row):last-child {
+  border-bottom: 0;
+}
+
+.list-row.exp-row {
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+@media (hover: hover) {
+  .exp-row:hover {
+    background: var(--surface-2);
+  }
+}
+.exp-row:focus-visible {
+  outline-offset: -3px;
+}
+.exp-row .list-title,
+.exp-drawer-row .list-title {
+  overflow-wrap: anywhere;
+}
+.exp-row .list-sub,
+.exp-drawer-row .list-sub {
+  overflow-wrap: anywhere;
+}
+.exp-amount {
+  flex: none;
+  font-size: 17px;
+  font-weight: 700;
+}
+.exp-row-chevron {
+  flex: none;
+  margin-left: -4px;
+  color: var(--muted);
+}
+
+/* Category icon tiles (tokens only). */
+.exp-cat-rent {
+  background: var(--accent-soft);
+  color: var(--warning);
+}
+.exp-cat-electric {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.exp-cat-wage {
+  background: var(--info-soft);
+  color: var(--info);
+}
+.exp-cat-supplies {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.exp-cat-travel {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+.exp-cat-food {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.exp-cat-other {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+/* ---------- empty ---------- */
+.exp-empty .ui-empty {
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.exp-empty-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(320px, 80vw);
+}
+
+/* ---------- form ---------- */
+.exp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.exp-date-chips {
+  margin-top: -4px;
+}
+.exp-foot-delete.btn {
+  --btn-fg: var(--danger);
+  flex: 0 0 auto;
+}
+
+/* ---------- copy from last month ---------- */
+.exp-copy-intro {
+  margin: 0;
+  color: var(--text-2);
+}
+.exp-copy-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.exp-copy-list > li {
+  border-bottom: 1px solid var(--border);
+}
+.exp-copy-list > li:last-child {
+  border-bottom: 0;
+}
+.exp-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 14px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.exp-copy-row.checked {
+  background: var(--primary-soft);
+}
+.exp-copy-row .list-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.exp-check {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}

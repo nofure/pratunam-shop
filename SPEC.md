@@ -48,9 +48,11 @@ Android phones/tablets, fully offline, in Thai.
 - `src/db.ts` — Dexie `db` with tables `shop, booths, staff, tiers, sales, shifts, cashMoves, lots,
   adjustments, suppliers, expenses`. **Write only through `save(table, rec)`, `saveMany`, `patch(table, id,
   changes)`, `remove(table, id)`** (soft delete). They stamp id/createdAt/updatedAt/deviceId/synced.
-  Never `table.put/add/delete` directly (the sync module is the only exception). Filter reads with
-  `alive(rows)` (drops `deleted: 1`). Use `db.transaction('rw', [...tables], async () => …)` when writing
-  several related records.
+  Never `table.put/add/delete` directly. Exceptions: the sync module, and `importBackup()` in
+  `src/lib/backup.ts`, which `bulkPut`s restored rows keeping their own `updatedAt` (so an old backup never
+  wins last-write-wins against newer edits on other devices) and with `synced: 0` (so they are pushed).
+  Filter reads with `alive(rows)` (drops `deleted: 1`). Use `db.transaction('rw', [...tables], async () => …)`
+  when writing several related records.
 - `src/device.ts` — per-device localStorage config: `getDevice()`, `setDevice()`, `useDevice()`
   (`boothId` of this device, sync URL/key, `lineNotify`, `autoLockMin`).
 - `src/session.tsx` — `useSession()` → `{ staff, isOwner, login, logout }`; `findOwnerByPin(pin)`.

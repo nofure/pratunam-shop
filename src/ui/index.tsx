@@ -1,6 +1,20 @@
-// STUB — the UI kit agent replaces this file (keep the UIProvider export).
-import type { ReactNode } from 'react'
-
-export function UIProvider({ children }: { children: ReactNode }) {
-  return <>{children}</>
-}
+// UI kit — shared components for every feature. Import from 'src/ui' (e.g. `import { Button } from '../../ui'`).
+// Global CSS classes (.btn, .input, .card, .row, .stack, .grid-2, .chip, .table, …) live in ./ui.css.
+export { UIProvider, useToast, useConfirm } from './UIProvider'
+export type { ToastTone, ToastFn, ConfirmOptions, ConfirmFn } from './UIProvider'
+export { Button, IconButton, Spinner } from './Button'
+export type { ButtonProps, ButtonVariant, ButtonSize, IconButtonProps } from './Button'
+export { Modal } from './Modal'
+export type { ModalProps } from './Modal'
+export { Card, PageHeader, EmptyState, Badge, Stat, Money } from './basics'
+export type { CardProps, PageHeaderProps, EmptyStateProps, BadgeProps, BadgeTone, StatProps, StatTone, MoneyProps, MoneySize } from './basics'
+export { Field, MoneyInput, Segmented, Toggle, DateRangePicker } from './inputs'
+export type { FieldProps, MoneyInputProps, SegmentedOption, SegmentedProps, ToggleProps, DateRangePickerProps } from './inputs'
+export { NumPad, PinPad } from './keypads'
+export type { NumPadProps, PinPadProps } from './keypads'
+export { QrCode } from './QrCode'
+export type { QrCodeProps } from './QrCode'
+export { BarChart, HBarList } from './charts'
+export type { BarDatum, BarChartProps, HBarRow, HBarListProps } from './charts'
+export { parseMoney, compactNumber } from './logic'
+export { cx } from './cx'
