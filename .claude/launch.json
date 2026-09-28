@@ -4,8 +4,25 @@
     {
       "name": "shop-dev",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["vite", "--port", "5199", "--strictPort"],
+      "runtimeArgs": [
+        "vite",
+        "--port",
+        "5199",
+        "--strictPort"
+      ],
       "port": 5199
+    },
+    {
+      "name": "shop-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--port",
+        "4181",
+        "--strictPort"
+      ],
+      "port": 4181
     }
   ]
 }

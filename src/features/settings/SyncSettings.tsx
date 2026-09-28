@@ -9,6 +9,9 @@ import { dateTime } from '../../lib/format'
 import { Badge, Button, Card, Field, PageHeader, Toggle, useConfirm, useToast, type BadgeTone } from '../../ui'
 import { SYNC_SHARE_TITLE, parseSyncShare, syncShareText } from './logic'
 
+const CODE_GS_URL = 'https://raw.githubusercontent.com/nofure/pratunam-shop/main/backend/Code.gs'
+const GUIDE_URL = 'https://github.com/nofure/pratunam-shop/blob/main/docs/sync-setup.md'
+
 const STATE_TEXT: Record<SyncStatus['state'], { label: string; tone: BadgeTone }> = {
   off: { label: 'ปิดอยู่', tone: 'neutral' },
   idle: { label: 'รอซิงก์', tone: 'info' },
@@ -232,7 +235,12 @@ export default function SyncSettings() {
         <Card title="วิธีตั้งค่า (ทำครั้งเดียว ที่คอมพิวเตอร์จะง่ายสุด)">
           <ol className="settings-steps">
             <li>สร้าง Google Sheet ใหม่ด้วยบัญชี Google ของเจ้าของร้าน</li>
-            <li>เมนู ส่วนขยาย → Apps Script ลบโค้ดเดิม แล้ววางโค้ดจากไฟล์ backend/Code.gs</li>
+            <li>
+              เมนู ส่วนขยาย → Apps Script ลบโค้ดเดิม แล้ววางโค้ดทั้งหมดจาก{' '}
+              <a href={CODE_GS_URL} target="_blank" rel="noreferrer">
+                ไฟล์ Code.gs
+              </a>
+            </li>
             <li>ตั้งรหัสลับ SYNC_KEY ที่ การตั้งค่าโปรเจ็กต์ → พร็อพเพอร์ตี้ของสคริปต์ (หรือเรียกใช้ setup ให้สร้างให้)</li>
             <li>เลือกฟังก์ชัน setup แล้วกด เรียกใช้ และกดอนุญาตสิทธิ์</li>
             <li>การทำให้ใช้งานได้ → รายการใหม่ → เว็บแอป เรียกใช้ในฐานะ "ฉัน" ผู้มีสิทธิ์ "ทุกคน"</li>
@@ -240,7 +248,10 @@ export default function SyncSettings() {
             <li>เครื่องอื่น: หน้าตั้งค่าร้านครั้งแรก เลือก "เชื่อมกับร้านที่มีอยู่" แล้วใส่ลิงก์และรหัสเดียวกัน</li>
           </ol>
           <p className="settings-note" style={{ marginTop: 12 }}>
-            ขั้นตอนละเอียดพร้อมวิธีตั้งค่า LINE อยู่ในไฟล์ docs/sync-setup.md
+            ขั้นตอนละเอียดพร้อมวิธีตั้งค่า LINE:{' '}
+            <a href={GUIDE_URL} target="_blank" rel="noreferrer">
+              คู่มือตั้งค่าซิงก์และ LINE
+            </a>
           </p>
         </Card>
       </div>
